@@ -1,0 +1,33 @@
+local ModeSystem = {}
+
+ModeSystem.Modes = {
+
+    ["quangdai"] = {
+
+        ["Auto Farm"] = function(player, state)
+            if state then
+                task.spawn(function()
+                    while state do
+                        task.wait(1)
+                        print("Farming...")
+                    end
+                end)
+            end
+        end,
+
+        ["Auto Click"] = function(player, state)
+            if state then
+                task.spawn(function()
+                    while state do
+                        task.wait(0.5)
+                        print("Click...")
+                    end
+                end)
+            end
+        end
+
+    }
+
+}
+
+return ModeSystem

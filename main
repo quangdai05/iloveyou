@@ -1,0 +1,157 @@
+--// ===== CONFIG (CHỈ SỬA LINK Ở ĐÂY) =====
+local Key = loadstring(game:HttpGet("https://raw.githubusercontent.com/quangdai05/iloveyou/refs/heads/main/key.lua"))()
+local Mode = loadstring(game:HttpGet("https://raw.githubusercontent.com/quangdai05/iloveyou/refs/heads/main/mode"))()
+
+
+--// giả lập getgenv
+getgenv = getgenv or function() return _G end
+
+local CONFIG = {
+    key  = getgenv().key  or "FREE-KEY",
+    mode = getgenv().mode or "quangdai"
+}
+
+--// LOAD FILE NGOÀI
+local KeySystem  = loadstring(game:HttpGet(KEY_LINK))()
+local ModeSystem = loadstring(game:HttpGet(MODE_LINK))()
+
+--// SERVICES
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UIS = game:GetService("UserInputService")
+local Lighting = game:GetService("Lighting")
+
+local player = Players.LocalPlayer
+
+--// CHECK KEY
+if not KeySystem:Validate(player, CONFIG.key) then
+    player:Kick("Key sai / hết hạn")
+    return
+end
+
+local modeData = ModeSystem.Modes[CONFIG.mode]
+if not modeData then return end
+
+--// BLUR
+local blur = Instance.new("BlurEffect", Lighting)
+blur.Size = 25
+
+--// GUI
+local gui = Instance.new("ScreenGui", player.PlayerGui)
+
+local main = Instance.new("Frame", gui)
+main.Size = UDim2.new(0,0,0,0)
+main.Position = UDim2.new(0.5,-350,0.5,-220)
+main.BackgroundColor3 = Color3.fromRGB(28,28,30)
+main.BackgroundTransparency = 0.1
+Instance.new("UICorner", main).CornerRadius = UDim.new(0,14)
+
+TweenService:Create(main,TweenInfo.new(0.35),{
+    Size = UDim2.new(0,700,0,440)
+}):Play()
+
+--// TOPBAR MAC
+local top = Instance.new("Frame", main)
+top.Size = UDim2.new(1,0,0,40)
+top.BackgroundTransparency = 1
+
+local function macBtn(color,x)
+    local b = Instance.new("Frame", top)
+    b.Size = UDim2.new(0,12,0,12)
+    b.Position = UDim2.new(0,x,0.5,-6)
+    b.BackgroundColor3 = color
+    Instance.new("UICorner", b).CornerRadius = UDim.new(1,0)
+    return b
+end
+
+local close = macBtn(Color3.fromRGB(255,95,87),10)
+macBtn(Color3.fromRGB(255,189,46),30)
+macBtn(Color3.fromRGB(40,200,64),50)
+
+close.InputBegan:Connect(function()
+    gui:Destroy()
+end)
+
+--// DRAG
+local dragging, start, pos
+top.InputBegan:Connect(function(i)
+    if i.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        start = i.Position
+        pos = main.Position
+    end
+end)
+
+UIS.InputChanged:Connect(function(i)
+    if dragging then
+        local d = i.Position - start
+        main.Position = UDim2.new(pos.X.Scale,pos.X.Offset+d.X,pos.Y.Scale,pos.Y.Offset+d.Y)
+    end
+end)
+
+UIS.InputEnded:Connect(function(i)
+    if i.UserInputType == Enum.UserInputType.MouseButton1 then dragging=false end
+end)
+
+--// CONTENT
+local content = Instance.new("ScrollingFrame", main)
+content.Size = UDim2.new(1,-40,1,-80)
+content.Position = UDim2.new(0,20,0,60)
+content.ScrollBarThickness = 4
+content.BackgroundTransparency = 1
+
+local layout = Instance.new("UIListLayout", content)
+layout.Padding = UDim.new(0,8)
+
+--// SWITCH IOS
+local function createSwitch(name, func)
+    local state = false
+
+    local frame = Instance.new("Frame", content)
+    frame.Size = UDim2.new(1,0,0,45)
+    frame.BackgroundColor3 = Color3.fromRGB(45,45,50)
+    Instance.new("UICorner", frame).CornerRadius = UDim.new(0,10)
+
+    local txt = Instance.new("TextLabel", frame)
+    txt.Text = name
+    txt.Size = UDim2.new(0.7,0,1,0)
+    txt.BackgroundTransparency = 1
+    txt.TextColor3 = Color3.new(1,1,1)
+
+    local toggle = Instance.new("Frame", frame)
+    toggle.Size = UDim2.new(0,50,0,25)
+    toggle.Position = UDim2.new(1,-60,0.5,-12)
+    toggle.BackgroundColor3 = Color3.fromRGB(80,80,80)
+    Instance.new("UICorner", toggle).CornerRadius = UDim.new(1,0)
+
+    local circle = Instance.new("Frame", toggle)
+    circle.Size = UDim2.new(0,20,0,20)
+    circle.Position = UDim2.new(0,2,0.5,-10)
+    circle.BackgroundColor3 = Color3.new(1,1,1)
+    Instance.new("UICorner", circle)
+
+    local function set(v)
+        state = v
+
+        TweenService:Create(toggle,TweenInfo.new(0.25),{
+            BackgroundColor3 = v and Color3.fromRGB(0,122,255) or Color3.fromRGB(80,80,80)
+        }):Play()
+
+        TweenService:Create(circle,TweenInfo.new(0.25),{
+            Position = v and UDim2.new(1,-22,0.5,-10) or UDim2.new(0,2,0.5,-10)
+        }):Play()
+
+        func(player, v)
+    end
+
+    frame.InputBegan:Connect(function(i)
+        if i.UserInputType == Enum.UserInputType.MouseButton1 then
+            set(not state)
+        end
+    end)
+end
+
+--// LOAD FUNCTION
+for name, func in pairs(modeData) do
+    createSwitch(name, func)
+end

@@ -1,4 +1,4 @@
--- 💀 NIGHTMYSTIC HUB GOD MODE (FINAL)
+-- 💀 DAI HUB - NIGHTMYSTIC GOD MODE
 
 getgenv().getgenmode = getgenv().getgenmode or "default"
 getgenv().getgenkey  = getgenv().getgenkey or ""
@@ -16,7 +16,7 @@ local Modes = loadstring(game:HttpGet(MODE_LINK))()
 local Keys  = loadstring(game:HttpGet(KEY_LINK))()
 
 -- 💾 CONFIG
-local folder = "NightHub"
+local folder = "DAI_HUB"
 local file = folder.."/"..player.UserId..".json"
 
 local function save(data)
@@ -33,7 +33,7 @@ end
 
 local config = load()
 
--- 🔑 KEY SYSTEM
+-- 🔑 KEY
 local keyData = Keys[getgenv().getgenkey]
 if not keyData then return end
 
@@ -49,7 +49,7 @@ end
 local gui = Instance.new("ScreenGui", game.CoreGui)
 
 --------------------------------------------------
--- 💀 INTRO NIGHTMYSTIC FINAL
+-- 💀 INTRO DAI HUB
 --------------------------------------------------
 
 local intro = Instance.new("Frame", gui)
@@ -60,7 +60,7 @@ local function spaced(str)
     return str:gsub(".", "%1 ")
 end
 
-local fullText = spaced("NightMystic")
+local fullText = spaced("DAI HUB")
 
 local layers = {}
 
@@ -72,7 +72,7 @@ for i = 1,3 do
     txt.BackgroundTransparency = 1
     txt.Text = ""
     txt.Font = Enum.Font.GothamBlack
-    txt.TextSize = 38
+    txt.TextSize = 40
 
     if i == 1 then
         txt.TextColor3 = Color3.fromRGB(255,0,0)
@@ -87,7 +87,6 @@ for i = 1,3 do
     table.insert(layers, txt)
 end
 
--- flicker + motion
 task.spawn(function()
     while intro.Parent do
         for _,l in pairs(layers) do
@@ -97,7 +96,6 @@ task.spawn(function()
     end
 end)
 
--- typing
 task.spawn(function()
     for i = 1, #fullText do
         for _,l in pairs(layers) do
@@ -107,7 +105,6 @@ task.spawn(function()
     end
 end)
 
--- flicker transparency
 task.spawn(function()
     while intro.Parent do
         for _,l in pairs(layers) do
@@ -117,7 +114,6 @@ task.spawn(function()
     end
 end)
 
--- scale
 for _,l in pairs(layers) do
     TweenService:Create(l, TweenInfo.new(0.6), {
         Size = UDim2.new(0,460,0,100)
@@ -147,7 +143,6 @@ main.Active = true
 main.Draggable = true
 Instance.new("UICorner", main).CornerRadius = UDim.new(0,14)
 
--- 🔥 NEON BORDER
 local stroke = Instance.new("UIStroke", main)
 stroke.Color = Color3.fromRGB(255,0,0)
 stroke.Thickness = 2
@@ -161,15 +156,13 @@ task.spawn(function()
     end
 end)
 
--- 🖼 LOGO
 local logo = Instance.new("ImageLabel", main)
 logo.Size = UDim2.new(0,110,0,110)
 logo.Position = UDim2.new(0.5,0,0.18,0)
 logo.AnchorPoint = Vector2.new(0.5,0.5)
 logo.BackgroundTransparency = 1
-logo.Image = "rbxassetid://7733658504"
+logo.Image = "rbxassetid://87021319226083"
 
--- 👤 NAME
 local name = Instance.new("TextLabel", main)
 name.Size = UDim2.new(1,0,0,30)
 name.Position = UDim2.new(0,0,0.35,0)
@@ -179,7 +172,6 @@ name.TextColor3 = Color3.new(1,1,1)
 name.Font = Enum.Font.GothamBold
 name.TextSize = 18
 
--- 📦 HOLDER
 local holder = Instance.new("Frame", main)
 holder.Position = UDim2.new(0,15,0.45,0)
 holder.Size = UDim2.new(1,-30,0.5,0)
@@ -188,7 +180,6 @@ holder.BackgroundTransparency = 1
 local layout = Instance.new("UIListLayout", holder)
 layout.Padding = UDim.new(0,10)
 
--- 🔴🟢 TOGGLE
 local function createToggle(name, callback)
     local frame = Instance.new("Frame", holder)
     frame.Size = UDim2.new(1,0,0,50)
@@ -240,21 +231,17 @@ local function createToggle(name, callback)
     end)
 end
 
--- LOAD MODE
 local modeData = Modes[getgenv().getgenmode] or {}
 for _,f in pairs(modeData) do
     createToggle(f.name, f.callback)
 end
 
---------------------------------------------------
--- 🧠 MINISIZE
---------------------------------------------------
-
+-- 🧠 minisize
 local mini = Instance.new("ImageButton", gui)
 mini.Size = UDim2.new(0,50,0,50)
 mini.Position = UDim2.new(1,-60,0.5,-25)
 mini.BackgroundTransparency = 1
-mini.Image = "rbxassetid://7733658504"
+mini.Image = "rbxassetid://83039899343699"
 Instance.new("UICorner", mini).CornerRadius = UDim.new(1,0)
 
 local glowMini = Instance.new("UIStroke", mini)

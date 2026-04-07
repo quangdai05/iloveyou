@@ -1,10 +1,4 @@
---[[
-    💀 MAC HUB PAID - ULTIMATE UI VERSION
-    - macOS professional UI (blur + animation)
-    - key system full (lifetime + time)
-    - config save
-    - 3 raw system
-]]
+
 
 getgenv().getgenmode = getgenv().getgenmode or "default"
 getgenv().getgenkey  = getgenv().getgenkey or ""
@@ -15,7 +9,7 @@ local UIS = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local player = Players.LocalPlayer
 
--- 🔗 LOAD RAW
+-- 🔗 LOAD
 local Modes = loadstring(game:HttpGet("https://raw.githubusercontent.com/quangdai05/iloveyou/refs/heads/main/mode"))()
 local Keys  = loadstring(game:HttpGet("https://raw.githubusercontent.com/quangdai05/iloveyou/refs/heads/main/key"))()
 
@@ -52,50 +46,107 @@ if keyData.type == "time" then
     end
 end
 
--- 🎨 UI MACOS PRO
+-- 🎨 GUI
 local gui = Instance.new("ScreenGui", game.CoreGui)
-local blur = Instance.new("BlurEffect", game.Lighting)
+gui.Name = "MacHubPro"
 
-blur.Size = 0
-TweenService:Create(blur, TweenInfo.new(0.5), {Size = 35}):Play()
+--------------------------------------------------
+-- 💀 INTRO LOADING
+--------------------------------------------------
+
+local intro = Instance.new("Frame", gui)
+intro.Size = UDim2.new(1,0,1,0)
+intro.BackgroundColor3 = Color3.fromRGB(10,10,15)
+
+local logo = Instance.new("TextLabel", intro)
+logo.Size = UDim2.new(0,0,0,0)
+logo.Position = UDim2.new(0.5,0,0.4,0)
+logo.AnchorPoint = Vector2.new(0.5,0.5)
+logo.BackgroundTransparency = 1
+logo.Text = "MacHub Premium"
+logo.TextColor3 = Color3.new(1,1,1)
+logo.Font = Enum.Font.GothamBold
+logo.TextSize = 28
+logo.TextTransparency = 1
+
+local stroke = Instance.new("UIStroke", logo)
+stroke.Color = Color3.fromRGB(0,170,255)
+
+local loading = Instance.new("TextLabel", intro)
+loading.Size = UDim2.new(0,200,0,30)
+loading.Position = UDim2.new(0.5,0,0.55,0)
+loading.AnchorPoint = Vector2.new(0.5,0.5)
+loading.BackgroundTransparency = 1
+loading.Text = "Loading..."
+loading.TextColor3 = Color3.fromRGB(180,180,180)
+loading.Font = Enum.Font.Gotham
+loading.TextSize = 16
+loading.TextTransparency = 1
+
+local barBG = Instance.new("Frame", intro)
+barBG.Size = UDim2.new(0,250,0,6)
+barBG.Position = UDim2.new(0.5,0,0.65,0)
+barBG.AnchorPoint = Vector2.new(0.5,0.5)
+barBG.BackgroundColor3 = Color3.fromRGB(40,40,50)
+Instance.new("UICorner", barBG).CornerRadius = UDim.new(1,0)
+
+local bar = Instance.new("Frame", barBG)
+bar.Size = UDim2.new(0,0,1,0)
+bar.BackgroundColor3 = Color3.fromRGB(0,170,255)
+Instance.new("UICorner", bar).CornerRadius = UDim.new(1,0)
+
+TweenService:Create(logo, TweenInfo.new(0.5), {
+    Size = UDim2.new(0,300,0,50),
+    TextTransparency = 0
+}):Play()
+
+task.wait(0.3)
+
+TweenService:Create(loading, TweenInfo.new(0.4), {
+    TextTransparency = 0
+}):Play()
+
+TweenService:Create(bar, TweenInfo.new(2), {
+    Size = UDim2.new(1,0,1,0)
+}):Play()
+
+task.wait(2.5)
+
+TweenService:Create(intro, TweenInfo.new(0.5), {
+    BackgroundTransparency = 1
+}):Play()
+
+task.wait(0.5)
+intro:Destroy()
+
+--------------------------------------------------
+-- 🎨 MAIN UI
+--------------------------------------------------
 
 local main = Instance.new("Frame", gui)
 main.Size = UDim2.new(0,0,0,0)
 main.Position = UDim2.new(0.5,-230,0.5,-150)
 main.BackgroundColor3 = Color3.fromRGB(22,22,28)
-main.BackgroundTransparency = 0.05
 main.Active = true
 main.Draggable = true
 
 Instance.new("UICorner", main).CornerRadius = UDim.new(0,18)
 
-TweenService:Create(main, TweenInfo.new(0.45, Enum.EasingStyle.Quart), {
+TweenService:Create(main, TweenInfo.new(0.4), {
     Size = UDim2.new(0,460,0,300)
 }):Play()
 
-local stroke = Instance.new("UIStroke", main)
-stroke.Thickness = 2
-stroke.Color = Color3.fromRGB(0,170,255)
-stroke.Transparency = 0.2
+local stroke2 = Instance.new("UIStroke", main)
+stroke2.Color = Color3.fromRGB(0,170,255)
 
--- MAC BUTTON
+-- mac btn
 local function macBtn(color,x)
     local b = Instance.new("TextButton", main)
     b.Size = UDim2.new(0,14,0,14)
     b.Position = UDim2.new(0,x,0,12)
     b.BackgroundColor3 = color
     b.Text = ""
-    b.AutoButtonColor = false
     Instance.new("UICorner", b).CornerRadius = UDim.new(1,0)
-
-    b.MouseEnter:Connect(function()
-        TweenService:Create(b,TweenInfo.new(0.2),{Size = UDim2.new(0,16,0,16)}):Play()
-    end)
-
-    b.MouseLeave:Connect(function()
-        TweenService:Create(b,TweenInfo.new(0.2),{Size = UDim2.new(0,14,0,14)}):Play()
-    end)
-
     return b
 end
 
@@ -103,11 +154,6 @@ local close = macBtn(Color3.fromRGB(255,95,86),14)
 local hide  = macBtn(Color3.fromRGB(255,189,46),34)
 
 close.MouseButton1Click:Connect(function()
-    TweenService:Create(main,TweenInfo.new(0.25),{
-        Size = UDim2.new(0,0,0,0)
-    }):Play()
-    task.wait(0.25)
-    blur:Destroy()
     gui:Destroy()
 end)
 
@@ -115,27 +161,28 @@ hide.MouseButton1Click:Connect(function()
     main.Visible = false
 end)
 
--- TOGGLE UI
-UIS.InputBegan:Connect(function(i)
-    if i.KeyCode == Enum.KeyCode.RightShift then
-        main.Visible = not main.Visible
-    end
+-- minisize button
+local miniBtn = Instance.new("ImageButton", gui)
+miniBtn.Size = UDim2.new(0,50,0,50)
+miniBtn.Position = UDim2.new(1,-60,0.5,-25)
+miniBtn.BackgroundTransparency = 1
+miniBtn.Image = "rbxassetid://7733658504"
+Instance.new("UICorner", miniBtn).CornerRadius = UDim.new(1,0)
+
+miniBtn.MouseButton1Click:Connect(function()
+    main.Visible = not main.Visible
 end)
 
--- TITLE
-local topbar = Instance.new("Frame", main)
-topbar.Size = UDim2.new(1,0,0,40)
-topbar.BackgroundTransparency = 1
-
-local title = Instance.new("TextLabel", topbar)
-title.Size = UDim2.new(1,0,1,0)
+-- title
+local title = Instance.new("TextLabel", main)
+title.Size = UDim2.new(1,0,0,40)
 title.Text = "MacHub Premium"
-title.TextColor3 = Color3.fromRGB(255,255,255)
 title.BackgroundTransparency = 1
+title.TextColor3 = Color3.new(1,1,1)
 title.Font = Enum.Font.GothamBold
 title.TextSize = 18
 
--- HOLDER
+-- holder
 local holder = Instance.new("Frame", main)
 holder.Position = UDim2.new(0,15,0,50)
 holder.Size = UDim2.new(1,-30,1,-60)
@@ -144,39 +191,24 @@ holder.BackgroundTransparency = 1
 local layout = Instance.new("UIListLayout", holder)
 layout.Padding = UDim.new(0,10)
 
--- BUTTON STYLE
+-- button
 local function createButton(text)
     local btn = Instance.new("TextButton", holder)
     btn.Size = UDim2.new(1,0,0,40)
     btn.Text = text
-    btn.TextColor3 = Color3.fromRGB(255,255,255)
-    btn.BackgroundColor3 = Color3.fromRGB(35,35,45)
-    btn.Font = Enum.Font.Gotham
+    btn.BackgroundColor3 = Color3.fromRGB(30,30,40)
+    btn.TextColor3 = Color3.new(1,1,1)
+    btn.Font = Enum.Font.GothamMedium
     btn.TextSize = 14
-
     Instance.new("UICorner", btn).CornerRadius = UDim.new(0,12)
-
-    btn.MouseEnter:Connect(function()
-        TweenService:Create(btn,TweenInfo.new(0.2),{
-            BackgroundColor3 = Color3.fromRGB(50,50,65)
-        }):Play()
-    end)
-
-    btn.MouseLeave:Connect(function()
-        TweenService:Create(btn,TweenInfo.new(0.2),{
-            BackgroundColor3 = Color3.fromRGB(35,35,45)
-        }):Play()
-    end)
-
     return btn
 end
 
--- LOAD MODE
+-- load mode
 local modeData = Modes[getgenv().getgenmode] or {}
 
 for _,f in pairs(modeData) do
     local btn = createButton(f.name)
-
     local state = config[f.name] or false
 
     btn.MouseButton1Click:Connect(function()
@@ -185,26 +217,12 @@ for _,f in pairs(modeData) do
         save(config)
 
         if state then
-            btn.Text = f.name.."  ●"
-            TweenService:Create(btn,TweenInfo.new(0.2),{
-                BackgroundColor3 = Color3.fromRGB(0,170,255)
-            }):Play()
+            btn.Text = f.name.." ●"
+            btn.BackgroundColor3 = Color3.fromRGB(0,170,255)
             task.spawn(f.callback)
         else
             btn.Text = f.name
-            TweenService:Create(btn,TweenInfo.new(0.2),{
-                BackgroundColor3 = Color3.fromRGB(35,35,45)
-            }):Play()
+            btn.BackgroundColor3 = Color3.fromRGB(30,30,40)
         end
     end)
 end
-
--- GLOW PULSE
-task.spawn(function()
-    while true do
-        TweenService:Create(stroke,TweenInfo.new(1),{Transparency=0.6}):Play()
-        task.wait(1)
-        TweenService:Create(stroke,TweenInfo.new(1),{Transparency=0.2}):Play()
-        task.wait(1)
-    end
-end)

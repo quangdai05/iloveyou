@@ -1,0 +1,30 @@
+return {
+    ["DAI-VIP-FOREVER"] = {
+        type = "lifetime"
+    },
+
+    ["DAI-90DAY"] = {
+        type = "time",
+        duration = 90
+    },
+
+    ["DAI-30DAY"] = {
+        type = "time",
+        duration = 30
+    },
+
+    ["DAI-7DAY"] = {
+        type = "time",
+        duration = 7
+    },
+
+    ["DAI-24H"] = {
+        type = "time",
+        duration = 1
+    },
+
+    ["TEST-KEY"] = {
+        type = "time",
+        duration = 1
+    }
+}

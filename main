@@ -1,11 +1,10 @@
-
+-- 💀 NIGHTMYSTIC HUB (NEON RED)
 
 getgenv().getgenmode = getgenv().getgenmode or "default"
 getgenv().getgenkey  = getgenv().getgenkey or ""
 
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
-local UIS = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local player = Players.LocalPlayer
 
@@ -14,7 +13,7 @@ local Modes = loadstring(game:HttpGet("https://raw.githubusercontent.com/quangda
 local Keys  = loadstring(game:HttpGet("https://raw.githubusercontent.com/quangdai05/iloveyou/refs/heads/main/key"))()
 
 -- 💾 CONFIG
-local folder = "MacHubPro"
+local folder = "NightHub"
 local file = folder.."/"..player.UserId..".json"
 
 local function save(data)
@@ -31,7 +30,7 @@ end
 
 local config = load()
 
--- 🔑 KEY SYSTEM
+-- 🔑 KEY CHECK
 local keyData = Keys[getgenv().getgenkey]
 if not keyData then return end
 
@@ -48,69 +47,36 @@ end
 
 -- 🎨 GUI
 local gui = Instance.new("ScreenGui", game.CoreGui)
-gui.Name = "MacHubPro"
 
 --------------------------------------------------
--- 💀 INTRO LOADING
+-- 💀 INTRO
 --------------------------------------------------
 
 local intro = Instance.new("Frame", gui)
 intro.Size = UDim2.new(1,0,1,0)
-intro.BackgroundColor3 = Color3.fromRGB(10,10,15)
+intro.BackgroundColor3 = Color3.fromRGB(5,5,5)
 
 local logo = Instance.new("TextLabel", intro)
 logo.Size = UDim2.new(0,0,0,0)
 logo.Position = UDim2.new(0.5,0,0.4,0)
 logo.AnchorPoint = Vector2.new(0.5,0.5)
 logo.BackgroundTransparency = 1
-logo.Text = "MacHub Premium"
-logo.TextColor3 = Color3.new(1,1,1)
-logo.Font = Enum.Font.GothamBold
-logo.TextSize = 28
+logo.Text = "NightMystic"
+logo.TextColor3 = Color3.fromRGB(255,0,0)
+logo.Font = Enum.Font.GothamBlack
+logo.TextSize = 32
 logo.TextTransparency = 1
 
 local stroke = Instance.new("UIStroke", logo)
-stroke.Color = Color3.fromRGB(0,170,255)
-
-local loading = Instance.new("TextLabel", intro)
-loading.Size = UDim2.new(0,200,0,30)
-loading.Position = UDim2.new(0.5,0,0.55,0)
-loading.AnchorPoint = Vector2.new(0.5,0.5)
-loading.BackgroundTransparency = 1
-loading.Text = "Loading..."
-loading.TextColor3 = Color3.fromRGB(180,180,180)
-loading.Font = Enum.Font.Gotham
-loading.TextSize = 16
-loading.TextTransparency = 1
-
-local barBG = Instance.new("Frame", intro)
-barBG.Size = UDim2.new(0,250,0,6)
-barBG.Position = UDim2.new(0.5,0,0.65,0)
-barBG.AnchorPoint = Vector2.new(0.5,0.5)
-barBG.BackgroundColor3 = Color3.fromRGB(40,40,50)
-Instance.new("UICorner", barBG).CornerRadius = UDim.new(1,0)
-
-local bar = Instance.new("Frame", barBG)
-bar.Size = UDim2.new(0,0,1,0)
-bar.BackgroundColor3 = Color3.fromRGB(0,170,255)
-Instance.new("UICorner", bar).CornerRadius = UDim.new(1,0)
+stroke.Color = Color3.fromRGB(255,0,0)
+stroke.Thickness = 2
 
 TweenService:Create(logo, TweenInfo.new(0.5), {
-    Size = UDim2.new(0,300,0,50),
+    Size = UDim2.new(0,300,0,60),
     TextTransparency = 0
 }):Play()
 
-task.wait(0.3)
-
-TweenService:Create(loading, TweenInfo.new(0.4), {
-    TextTransparency = 0
-}):Play()
-
-TweenService:Create(bar, TweenInfo.new(2), {
-    Size = UDim2.new(1,0,1,0)
-}):Play()
-
-task.wait(2.5)
+task.wait(1.5)
 
 TweenService:Create(intro, TweenInfo.new(0.5), {
     BackgroundTransparency = 1
@@ -120,109 +86,124 @@ task.wait(0.5)
 intro:Destroy()
 
 --------------------------------------------------
--- 🎨 MAIN UI
+-- 🔴 MAIN UI
 --------------------------------------------------
 
 local main = Instance.new("Frame", gui)
-main.Size = UDim2.new(0,0,0,0)
-main.Position = UDim2.new(0.5,-230,0.5,-150)
-main.BackgroundColor3 = Color3.fromRGB(22,22,28)
+main.Size = UDim2.new(0,300,0,380)
+main.Position = UDim2.new(0.5,-150,0.5,-190)
+main.BackgroundColor3 = Color3.fromRGB(8,8,8)
 main.Active = true
 main.Draggable = true
 
-Instance.new("UICorner", main).CornerRadius = UDim.new(0,18)
+Instance.new("UICorner", main).CornerRadius = UDim.new(0,14)
 
-TweenService:Create(main, TweenInfo.new(0.4), {
-    Size = UDim2.new(0,460,0,300)
-}):Play()
-
+-- 🔥 NEON BORDER RED
 local stroke2 = Instance.new("UIStroke", main)
-stroke2.Color = Color3.fromRGB(0,170,255)
+stroke2.Color = Color3.fromRGB(255,0,0)
+stroke2.Thickness = 2
 
--- mac btn
-local function macBtn(color,x)
-    local b = Instance.new("TextButton", main)
-    b.Size = UDim2.new(0,14,0,14)
-    b.Position = UDim2.new(0,x,0,12)
-    b.BackgroundColor3 = color
-    b.Text = ""
-    Instance.new("UICorner", b).CornerRadius = UDim.new(1,0)
-    return b
-end
-
-local close = macBtn(Color3.fromRGB(255,95,86),14)
-local hide  = macBtn(Color3.fromRGB(255,189,46),34)
-
-close.MouseButton1Click:Connect(function()
-    gui:Destroy()
+task.spawn(function()
+    while true do
+        TweenService:Create(stroke2,TweenInfo.new(1),{Transparency=0.7}):Play()
+        task.wait(1)
+        TweenService:Create(stroke2,TweenInfo.new(1),{Transparency=0.1}):Play()
+        task.wait(1)
+    end
 end)
 
-hide.MouseButton1Click:Connect(function()
-    main.Visible = false
-end)
+-- 🖼 LOGO (THAY ID)
+local logo2 = Instance.new("ImageLabel", main)
+logo2.Size = UDim2.new(0,110,0,110)
+logo2.Position = UDim2.new(0.5,0,0.18,0)
+logo2.AnchorPoint = Vector2.new(0.5,0.5)
+logo2.BackgroundTransparency = 1
+logo2.Image = "rbxassetid://1234567890"
 
--- minisize button
-local miniBtn = Instance.new("ImageButton", gui)
-miniBtn.Size = UDim2.new(0,50,0,50)
-miniBtn.Position = UDim2.new(1,-60,0.5,-25)
-miniBtn.BackgroundTransparency = 1
-miniBtn.Image = "rbxassetid://7733658504"
-Instance.new("UICorner", miniBtn).CornerRadius = UDim.new(1,0)
+-- 👤 NAME
+local name = Instance.new("TextLabel", main)
+name.Size = UDim2.new(1,0,0,30)
+name.Position = UDim2.new(0,0,0.35,0)
+name.BackgroundTransparency = 1
+name.Text = player.Name
+name.TextColor3 = Color3.fromRGB(255,255,255)
+name.Font = Enum.Font.GothamBold
+name.TextSize = 18
 
-miniBtn.MouseButton1Click:Connect(function()
-    main.Visible = not main.Visible
-end)
-
--- title
-local title = Instance.new("TextLabel", main)
-title.Size = UDim2.new(1,0,0,40)
-title.Text = "MacHub Premium"
-title.BackgroundTransparency = 1
-title.TextColor3 = Color3.new(1,1,1)
-title.Font = Enum.Font.GothamBold
-title.TextSize = 18
-
--- holder
+-- 📦 HOLDER
 local holder = Instance.new("Frame", main)
-holder.Position = UDim2.new(0,15,0,50)
-holder.Size = UDim2.new(1,-30,1,-60)
+holder.Position = UDim2.new(0,15,0.45,0)
+holder.Size = UDim2.new(1,-30,0.5,0)
 holder.BackgroundTransparency = 1
 
 local layout = Instance.new("UIListLayout", holder)
 layout.Padding = UDim.new(0,10)
 
--- button
-local function createButton(text)
-    local btn = Instance.new("TextButton", holder)
-    btn.Size = UDim2.new(1,0,0,40)
-    btn.Text = text
-    btn.BackgroundColor3 = Color3.fromRGB(30,30,40)
-    btn.TextColor3 = Color3.new(1,1,1)
-    btn.Font = Enum.Font.GothamMedium
-    btn.TextSize = 14
-    Instance.new("UICorner", btn).CornerRadius = UDim.new(0,12)
-    return btn
-end
+-- 🔴🟢 TOGGLE
+local function createToggle(name, callback)
+    local frame = Instance.new("Frame", holder)
+    frame.Size = UDim2.new(1,0,0,50)
+    frame.BackgroundColor3 = Color3.fromRGB(15,15,15)
+    Instance.new("UICorner", frame).CornerRadius = UDim.new(0,10)
 
--- load mode
-local modeData = Modes[getgenv().getgenmode] or {}
+    local text = Instance.new("TextLabel", frame)
+    text.Size = UDim2.new(0.6,0,1,0)
+    text.Position = UDim2.new(0,10,0,0)
+    text.BackgroundTransparency = 1
+    text.Text = name.." ("..player.Name..")"
+    text.TextColor3 = Color3.fromRGB(255,255,255)
+    text.Font = Enum.Font.Gotham
+    text.TextSize = 14
+    text.TextXAlignment = Enum.TextXAlignment.Left
 
-for _,f in pairs(modeData) do
-    local btn = createButton(f.name)
-    local state = config[f.name] or false
+    local btn = Instance.new("TextButton", frame)
+    btn.Size = UDim2.new(0,50,0,24)
+    btn.Position = UDim2.new(1,-60,0.5,-12)
+    btn.BackgroundColor3 = Color3.fromRGB(255,0,0)
+    btn.Text = ""
+    Instance.new("UICorner", btn).CornerRadius = UDim.new(1,0)
+
+    local glow = Instance.new("UIStroke", btn)
+    glow.Thickness = 2
+    glow.Color = Color3.fromRGB(255,0,0)
+
+    local state = false
 
     btn.MouseButton1Click:Connect(function()
         state = not state
-        config[f.name] = state
-        save(config)
 
         if state then
-            btn.Text = f.name.." ●"
-            btn.BackgroundColor3 = Color3.fromRGB(0,170,255)
-            task.spawn(f.callback)
+            btn.BackgroundColor3 = Color3.fromRGB(0,255,120)
+            glow.Color = Color3.fromRGB(0,255,120)
+            task.spawn(callback)
         else
-            btn.Text = f.name
-            btn.BackgroundColor3 = Color3.fromRGB(30,30,40)
+            btn.BackgroundColor3 = Color3.fromRGB(255,0,0)
+            glow.Color = Color3.fromRGB(255,0,0)
         end
     end)
 end
+
+-- LOAD MODE
+local modeData = Modes[getgenv().getgenmode] or {}
+for _,f in pairs(modeData) do
+    createToggle(f.name, f.callback)
+end
+
+--------------------------------------------------
+-- 🧠 MINISIZE
+--------------------------------------------------
+
+local mini = Instance.new("ImageButton", gui)
+mini.Size = UDim2.new(0,50,0,50)
+mini.Position = UDim2.new(1,-60,0.5,-25)
+mini.BackgroundTransparency = 1
+mini.Image = "rbxassetid://7733658504"
+
+Instance.new("UICorner", mini).CornerRadius = UDim.new(1,0)
+
+local glowMini = Instance.new("UIStroke", mini)
+glowMini.Color = Color3.fromRGB(255,0,0)
+
+mini.MouseButton1Click:Connect(function()
+    main.Visible = not main.Visible
+end)

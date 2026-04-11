@@ -1,4 +1,4 @@
--- 💀 DAI HUB FINAL GOD (PAID STYLE)
+-- 💀 DAI HUB - GLASS GRID FINAL (NO MAP BLUR)
 
 if getgenv().DAI_HUB_LOADED then return end
 getgenv().DAI_HUB_LOADED = true
@@ -37,7 +37,7 @@ end
 
 local config = load()
 
--- 🔑 KEY CHECK
+-- 🔑 KEY
 local keyData = Keys[getgenv().getgenkey]
 if not keyData then return end
 
@@ -117,68 +117,57 @@ task.spawn(function()
     end
 end)
 
-for _,l in pairs(layers) do
-    TweenService:Create(l, TweenInfo.new(0.6), {
-        Size = UDim2.new(0,460,0,100)
-    }):Play()
-end
-
-task.wait(2.5)
-
-for _,l in pairs(layers) do
-    TweenService:Create(l, TweenInfo.new(0.4), {
-        TextTransparency = 1
-    }):Play()
-end
-
-task.wait(0.4)
+task.wait(2.3)
 intro:Destroy()
 
 --------------------------------------------------
--- 🔴 MAIN UI
+-- 🔴 MAIN UI (GLASS + GRID)
 --------------------------------------------------
 
 local main = Instance.new("Frame", gui)
 main.Size = UDim2.new(0,330,0,410)
 main.Position = UDim2.new(0.5,-165,0.5,-205)
-main.BackgroundColor3 = Color3.fromRGB(10,10,10)
-main.BackgroundTransparency = 0.25
+main.BackgroundColor3 = Color3.fromRGB(15,15,15)
+main.BackgroundTransparency = 0.35
 main.Active = true
 main.Draggable = true
 Instance.new("UICorner", main).CornerRadius = UDim.new(0,16)
 
--- blur
-local blur = Instance.new("BlurEffect", game.Lighting)
-blur.Size = 15
-
--- grid
+-- 🔲 GRID CARO
 local grid = Instance.new("Frame", main)
 grid.Size = UDim2.new(1,0,1,0)
 grid.BackgroundTransparency = 1
 
 local gridLayout = Instance.new("UIGridLayout", grid)
-gridLayout.CellSize = UDim2.new(0,18,0,18)
+gridLayout.CellSize = UDim2.new(0,16,0,16)
 
-for i = 1,500 do
+for i = 1,600 do
     local cell = Instance.new("Frame", grid)
     cell.BackgroundColor3 = Color3.fromRGB(255,0,0)
-    cell.BackgroundTransparency = math.random(92,98)/100
+    cell.BackgroundTransparency = math.random(94,98)/100
 end
 
 task.spawn(function()
     while true do
         for _,v in pairs(grid:GetChildren()) do
             if v:IsA("Frame") then
-                TweenService:Create(v,TweenInfo.new(1),{
-                    BackgroundTransparency = math.random(92,98)/100
+                TweenService:Create(v,TweenInfo.new(1.2),{
+                    BackgroundTransparency = math.random(94,98)/100
                 }):Play()
             end
         end
-        task.wait(1)
+        task.wait(1.2)
     end
 end)
 
--- neon border
+-- 🌫 GLASS (blur giả)
+local glass = Instance.new("Frame", main)
+glass.Size = UDim2.new(1,0,1,0)
+glass.BackgroundColor3 = Color3.fromRGB(255,255,255)
+glass.BackgroundTransparency = 0.92
+Instance.new("UICorner", glass).CornerRadius = UDim.new(0,16)
+
+-- 🔥 NEON BORDER
 local stroke = Instance.new("UIStroke", main)
 stroke.Color = Color3.fromRGB(255,0,0)
 stroke.Thickness = 2
@@ -192,7 +181,7 @@ task.spawn(function()
     end
 end)
 
--- logo
+-- 🖼 LOGO
 local logo = Instance.new("ImageLabel", main)
 logo.Size = UDim2.new(0,100,0,100)
 logo.Position = UDim2.new(0.5,0,0.18,0)
@@ -200,7 +189,7 @@ logo.AnchorPoint = Vector2.new(0.5,0.5)
 logo.BackgroundTransparency = 1
 logo.Image = "rbxassetid://7733658504"
 
--- name
+-- 👤 NAME
 local name = Instance.new("TextLabel", main)
 name.Size = UDim2.new(1,0,0,30)
 name.Position = UDim2.new(0,0,0.35,0)
@@ -210,7 +199,7 @@ name.TextColor3 = Color3.new(1,1,1)
 name.Font = Enum.Font.GothamBold
 name.TextSize = 18
 
--- holder
+-- 📦 HOLDER
 local holder = Instance.new("Frame", main)
 holder.Position = UDim2.new(0,15,0.45,0)
 holder.Size = UDim2.new(1,-30,0.5,0)
@@ -219,17 +208,13 @@ holder.BackgroundTransparency = 1
 local layout = Instance.new("UIListLayout", holder)
 layout.Padding = UDim.new(0,10)
 
--- toggle
+-- 🔴🟢 TOGGLE
 local function createToggle(name, callback)
     local frame = Instance.new("Frame", holder)
     frame.Size = UDim2.new(1,0,0,50)
     frame.BackgroundColor3 = Color3.fromRGB(20,20,20)
-    frame.BackgroundTransparency = 0.35
+    frame.BackgroundTransparency = 0.4
     Instance.new("UICorner", frame).CornerRadius = UDim.new(0,12)
-
-    local stroke = Instance.new("UIStroke", frame)
-    stroke.Color = Color3.fromRGB(255,0,0)
-    stroke.Transparency = 0.6
 
     local text = Instance.new("TextLabel", frame)
     text.Size = UDim2.new(0.6,0,1,0)
@@ -276,12 +261,16 @@ local function createToggle(name, callback)
     end)
 end
 
+-- LOAD MODE
 local modeData = Modes[getgenv().getgenmode] or {}
 for _,f in pairs(modeData) do
     createToggle(f.name, f.callback)
 end
 
--- minisize
+--------------------------------------------------
+-- 🧠 MINISIZE
+--------------------------------------------------
+
 local mini = Instance.new("ImageButton", gui)
 mini.Size = UDim2.new(0,50,0,50)
 mini.Position = UDim2.new(1,-60,0.5,-25)

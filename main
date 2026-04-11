@@ -1,4 +1,7 @@
--- 💀 DAI HUB - NIGHTMYSTIC GOD MODE
+-- 💀 DAI HUB FINAL GOD (PAID STYLE)
+
+if getgenv().DAI_HUB_LOADED then return end
+getgenv().DAI_HUB_LOADED = true
 
 getgenv().getgenmode = getgenv().getgenmode or "default"
 getgenv().getgenkey  = getgenv().getgenkey or ""
@@ -6,9 +9,10 @@ getgenv().getgenkey  = getgenv().getgenkey or ""
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
+local UIS = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 
--- 🔗 LOAD RAW
+-- 🔗 LOAD
 local MODE_LINK = "https://raw.githubusercontent.com/quangdai05/iloveyou/refs/heads/main/mode"
 local KEY_LINK  = "https://raw.githubusercontent.com/quangdai05/iloveyou/refs/heads/main/key"
 
@@ -33,7 +37,7 @@ end
 
 local config = load()
 
--- 🔑 KEY
+-- 🔑 KEY CHECK
 local keyData = Keys[getgenv().getgenkey]
 if not keyData then return end
 
@@ -49,7 +53,7 @@ end
 local gui = Instance.new("ScreenGui", game.CoreGui)
 
 --------------------------------------------------
--- 💀 INTRO DAI HUB
+-- 💀 INTRO
 --------------------------------------------------
 
 local intro = Instance.new("Frame", gui)
@@ -61,7 +65,6 @@ local function spaced(str)
 end
 
 local fullText = spaced("DAI HUB")
-
 local layers = {}
 
 for i = 1,3 do
@@ -136,13 +139,46 @@ intro:Destroy()
 --------------------------------------------------
 
 local main = Instance.new("Frame", gui)
-main.Size = UDim2.new(0,300,0,380)
-main.Position = UDim2.new(0.5,-150,0.5,-190)
-main.BackgroundColor3 = Color3.fromRGB(8,8,8)
+main.Size = UDim2.new(0,330,0,410)
+main.Position = UDim2.new(0.5,-165,0.5,-205)
+main.BackgroundColor3 = Color3.fromRGB(10,10,10)
+main.BackgroundTransparency = 0.25
 main.Active = true
 main.Draggable = true
-Instance.new("UICorner", main).CornerRadius = UDim.new(0,14)
+Instance.new("UICorner", main).CornerRadius = UDim.new(0,16)
 
+-- blur
+local blur = Instance.new("BlurEffect", game.Lighting)
+blur.Size = 15
+
+-- grid
+local grid = Instance.new("Frame", main)
+grid.Size = UDim2.new(1,0,1,0)
+grid.BackgroundTransparency = 1
+
+local gridLayout = Instance.new("UIGridLayout", grid)
+gridLayout.CellSize = UDim2.new(0,18,0,18)
+
+for i = 1,500 do
+    local cell = Instance.new("Frame", grid)
+    cell.BackgroundColor3 = Color3.fromRGB(255,0,0)
+    cell.BackgroundTransparency = math.random(92,98)/100
+end
+
+task.spawn(function()
+    while true do
+        for _,v in pairs(grid:GetChildren()) do
+            if v:IsA("Frame") then
+                TweenService:Create(v,TweenInfo.new(1),{
+                    BackgroundTransparency = math.random(92,98)/100
+                }):Play()
+            end
+        end
+        task.wait(1)
+    end
+end)
+
+-- neon border
 local stroke = Instance.new("UIStroke", main)
 stroke.Color = Color3.fromRGB(255,0,0)
 stroke.Thickness = 2
@@ -156,13 +192,15 @@ task.spawn(function()
     end
 end)
 
+-- logo
 local logo = Instance.new("ImageLabel", main)
-logo.Size = UDim2.new(0,110,0,110)
+logo.Size = UDim2.new(0,100,0,100)
 logo.Position = UDim2.new(0.5,0,0.18,0)
 logo.AnchorPoint = Vector2.new(0.5,0.5)
 logo.BackgroundTransparency = 1
-logo.Image = "rbxassetid://87021319226083"
+logo.Image = "rbxassetid://7733658504"
 
+-- name
 local name = Instance.new("TextLabel", main)
 name.Size = UDim2.new(1,0,0,30)
 name.Position = UDim2.new(0,0,0.35,0)
@@ -172,6 +210,7 @@ name.TextColor3 = Color3.new(1,1,1)
 name.Font = Enum.Font.GothamBold
 name.TextSize = 18
 
+-- holder
 local holder = Instance.new("Frame", main)
 holder.Position = UDim2.new(0,15,0.45,0)
 holder.Size = UDim2.new(1,-30,0.5,0)
@@ -180,11 +219,17 @@ holder.BackgroundTransparency = 1
 local layout = Instance.new("UIListLayout", holder)
 layout.Padding = UDim.new(0,10)
 
+-- toggle
 local function createToggle(name, callback)
     local frame = Instance.new("Frame", holder)
     frame.Size = UDim2.new(1,0,0,50)
-    frame.BackgroundColor3 = Color3.fromRGB(15,15,15)
-    Instance.new("UICorner", frame).CornerRadius = UDim.new(0,10)
+    frame.BackgroundColor3 = Color3.fromRGB(20,20,20)
+    frame.BackgroundTransparency = 0.35
+    Instance.new("UICorner", frame).CornerRadius = UDim.new(0,12)
+
+    local stroke = Instance.new("UIStroke", frame)
+    stroke.Color = Color3.fromRGB(255,0,0)
+    stroke.Transparency = 0.6
 
     local text = Instance.new("TextLabel", frame)
     text.Size = UDim2.new(0.6,0,1,0)
@@ -236,12 +281,12 @@ for _,f in pairs(modeData) do
     createToggle(f.name, f.callback)
 end
 
--- 🧠 minisize
+-- minisize
 local mini = Instance.new("ImageButton", gui)
 mini.Size = UDim2.new(0,50,0,50)
 mini.Position = UDim2.new(1,-60,0.5,-25)
 mini.BackgroundTransparency = 1
-mini.Image = "rbxassetid://83039899343699"
+mini.Image = "rbxassetid://7733658504"
 Instance.new("UICorner", mini).CornerRadius = UDim.new(1,0)
 
 local glowMini = Instance.new("UIStroke", mini)
